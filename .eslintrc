@@ -1,17 +1,28 @@
 {
-  "extends": [
-    "airbnb",
-    "plugin:flowtype/recommended"
+	"parser": "babel-eslint",
+	"presets": [
+    ["env", { "targets": { "node": 7 }}],
+    "stage-0"
   ],
-  "plugins": [
+	"extends": [
+    "airbnb-base",
+    "plugin:flowtype/recommended",
+    "plugin:jest/recommended"
+  ],
+	"plugins": [
     "flowtype",
-    "compat"
-  ],
-  "env": {
-    "jest": true
-  },
-  "rules": {
-    "semi": [2, "never"],
-    "no-unexpected-multiline": 2
-  }
+    "flowtype-errors",
+    "prettier",
+    "jest"
+	],
+	"env": {
+		"jest": true
+	},
+	"rules": {
+		"no-unexpected-multiline": 2,
+		"flowtype/semi": ["error", "always"],
+		"no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-plusplus": 0,
+    "comma-dangle": ["error", "never"]
+	}
 }

@@ -7,23 +7,27 @@
 	"license": "MIT",
 	"scripts": {
 		"lint": "eslint src",
+		"lint-fix": "prettier --single-quote --write \"{,!(flow-typed|dll)/**}/*.{js,jsx}\" && yarn lint -- --fix",
 		"start": "babel-node src",
-    "test": "flow && jest --coverage"
+		"test": "jest --coverage"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.24.1",
 		"babel-core": "^6.25.0",
 		"babel-eslint": "^7.2.3",
-		"babel-jest": "^20.0.3",
-		"babel-loader": "^7.0.0",
 		"babel-preset-env": "^1.5.2",
 		"babel-preset-flow": "^6.23.0",
+		"babel-preset-stage-0": "^6.24.1",
 		"cross-env": "^5.0.1",
 		"eslint": "^3.19.0",
-		"eslint-config-airbnb": "^15.0.1",
-		"eslint-plugin-flowtype": "^2.34.0",
-		"eslint-plugin-import": "^2.2.0",
+		"eslint-config-airbnb-base": "^11.3.1",
+		"eslint-plugin-flowtype": "^2.35.0",
+		"eslint-plugin-flowtype-errors": "^3.3.1",
+		"eslint-plugin-import": "^2.7.0",
+		"eslint-plugin-jest": "^20.0.3",
+		"eslint-plugin-prettier": "^2.1.2",
 		"flow-bin": "^0.47.0",
-		"jest": "^20.0.4"
-	}
+		"jest-cli": "^20.0.4"
+	},
+	"dependencies": {}
 }
