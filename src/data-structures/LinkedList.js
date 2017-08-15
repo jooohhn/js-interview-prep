@@ -17,23 +17,15 @@ export default class LinkedList {
    */
   addFirst(value: any) {
     // If list is empty
-    if (!this.head && !this.tail) {
+    if (!this.head) {
       const node = new Node(value);
       this.head = node;
       this.tail = node;
-      // If list has one element
-    } else if (this.tail === this.head) {
-      if (!this.tail) { throw new Error("Since list has one element, tail shouldn't be null"); }
-      const newHead = new Node(value);
-      newHead.next = this.tail;
-      this.tail.prev = newHead;
-      this.head = newHead;
       // General case
     } else {
-      if (!this.head) throw new Error("List isn't empty, head should exist");
       const newHead = new Node(value);
-      newHead.next = this.head;
       this.head.prev = newHead;
+      newHead.next = this.head;
       this.head = newHead;
     }
   }
@@ -43,20 +35,12 @@ export default class LinkedList {
    */
   addLast(value: any) {
     // If list is empty
-    if (!this.head && !this.tail) {
+    if (!this.tail) {
       const node = new Node(value);
       this.head = node;
       this.tail = node;
-      // If list has one element
-    } else if (this.tail === this.head) {
-      if (!this.head) { throw new Error("Since list has one element, head shouldn't be null"); }
-      const newTail = new Node(value);
-      newTail.prev = this.head;
-      this.head.next = newTail;
-      this.tail = newTail;
       // General case
     } else {
-      if (!this.tail) throw new Error("List isn't empty, tail should exist");
       const newTail = new Node(value);
       this.tail.next = newTail;
       newTail.prev = this.tail;
@@ -68,68 +52,50 @@ export default class LinkedList {
    * Returns the value at the index or false if it doesn't exist
    * O(n)
    */
-  get(index: number): any | false {
-    let iterator = 0;
-    let currentNode = this.head;
-    while (iterator !== index) {
-      if (!currentNode) return false;
-      currentNode = currentNode.next;
-      iterator++;
-    }
-    return currentNode ? currentNode.data : false;
+  getFirst(): any {
+    if (!this.head) throw new Error('LinkedList is empty');
+    return this.head.data;
+  }
+
+  /**
+   * Returns the value at the index or false if it doesn't exist
+   * O(n)
+   */
+  getLast(): any {
+    if (!this.tail) throw new Error('LinkedList is empty');
+    return this.tail.data;
   }
 
   /**
    *  Returns true if value was in linked list, false if not
    *  O(n)
    */
-  delete(index: number): boolean {
-    let iterator = 0;
-    let currentNode = this.head;
-
-    while (iterator !== index) {
-      if (currentNode === null) {
-        return false;
-      }
-      currentNode = currentNode.next;
-      iterator++;
-    }
-
-    if (!currentNode) {
-      return false;
-    }
-
-    if (currentNode === this.head && currentNode === this.tail) {
+  delete(value: any): boolean {
+    if (!this.head) return false;
+    if (this.head === this.tail && this.head.data === value) {
       this.clear();
-    } else if (currentNode === this.head) {
-      if (!currentNode.next) {
-        throw new Error(
-          'There should always be data after head if LinkedList size > 1'
-        );
-      }
-      const newHead = currentNode.next;
-      newHead.prev = null;
-      this.head = newHead;
-    } else if (currentNode === this.tail) {
-      if (!currentNode.prev) {
-        throw new Error(
-          'There should always be data before tail if LinkedList size > 1'
-        );
-      }
-      const newTail = currentNode.prev;
-      newTail.next = null;
-      this.tail = newTail;
-    } else {
-      if (!currentNode.prev || !currentNode.next) {
-        throw new Error(
-          'Case of general node should always yield existing prev and next'
-        );
-      }
-      currentNode.prev.next = currentNode.next;
-      currentNode.next.prev = currentNode.prev;
+      return true;
     }
 
-    return true;
+    let currentHead = this.head;
+    while (currentHead) {
+      if (currentHead.data === value) {
+        if (currentHead === this.head) {
+          currentHead.next.prev = null;
+          this.head = currentHead.next;
+        } else if (currentHead === this.tail) {
+          currentHead.prev.next = null;
+          this.tail = currentHead.prev;
+        } else {
+          currentHead.prev.next = currentHead.next;
+          currentHead.next.prev = currentHead.prev;
+        }
+        return true;
+      }
+      currentHead = currentHead.next;
+    }
+
+    return false;
   }
 
   /**
