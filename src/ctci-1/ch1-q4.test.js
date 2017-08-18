@@ -8,6 +8,8 @@ describe('palindromePermutation', () => {
     expect(palindromePermutation('racecar')).toEqual(true);
     expect(palindromePermutation('foo')).toEqual(true);
     expect(palindromePermutation('taco cat')).toEqual(true);
-    expect(palindromePermutation('A Santa Lived As a Devil At NASA')).toEqual(true);
+    expect(palindromePermutation('A Santa Lived As a Devil At NASA')).toEqual(
+      true
+    );
   });
 });
