@@ -1,7 +1,4 @@
 // @flow
-/**
- *  A doubly linked list
- */
 export default class Stack {
   top: Node | null;
 
